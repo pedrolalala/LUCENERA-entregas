@@ -1,14 +1,17 @@
-import { cn } from '@/lib/utils';
-import { StatusSeparacao } from '@/types/separacao';
-import { Check, Shield, AlertTriangle, Package, Loader2 } from 'lucide-react';
+import { cn } from '@/lib/utils'
+import { StatusSeparacao } from '@/types/separacao'
+import { Check, Shield, AlertTriangle, Package, Loader2 } from 'lucide-react'
 
 interface StatusBadgeProps {
-  status: StatusSeparacao;
-  className?: string;
+  status: StatusSeparacao
+  className?: string
 }
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
-  const statusConfig: Record<StatusSeparacao, { label: string; className: string; icon: React.ReactNode }> = {
+  const statusConfig: Record<
+    StatusSeparacao,
+    { label: string; className: string; icon: React.ReactNode }
+  > = {
     material_solicitado: {
       label: 'Material Solicitado',
       className: 'bg-purple-100 text-purple-700 border border-purple-300',
@@ -39,18 +42,20 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       className: 'bg-gray-100 text-gray-600 border border-gray-300',
       icon: <Check className="w-3 h-3" />,
     },
-  };
+  }
 
-  const config = statusConfig[status] || statusConfig.material_solicitado;
+  const config = statusConfig[status] || statusConfig.material_solicitado
 
   return (
-    <span className={cn(
-      'px-2 py-0.5 rounded-md text-xs font-medium inline-flex items-center gap-1',
-      config.className,
-      className
-    )}>
+    <span
+      className={cn(
+        'px-2 py-0.5 rounded-md text-xs font-medium inline-flex items-center gap-1',
+        config.className,
+        className,
+      )}
+    >
       {config.icon}
       {config.label}
     </span>
-  );
+  )
 }

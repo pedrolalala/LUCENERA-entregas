@@ -4,23 +4,22 @@ Deno.serve(async (req) => {
   try {
     const lovableClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
     const seuSupabase = createClient(
       Deno.env.get('SUPA') ?? '',
-      Deno.env.get('SUPA_SERVICE_ROLE_KEY') ?? ''
+      Deno.env.get('SUPA_SERVICE_ROLE_KEY') ?? '',
     )
 
-    console.log("Iniciando varredura recursiva no bucket materiais-separacao...")
+    console.log('Iniciando varredura recursiva no bucket materiais-separacao...')
 
     let totalArquivos = 0
     let totalPastas = 0
     const erros: string[] = []
 
     async function listarRecursivo(pasta: string) {
-      const { data: items, error } = await lovableClient
-        .storage
+      const { data: items, error } = await lovableClient.storage
         .from('materiais-separacao')
         .list(pasta, { limit: 1000 })
 
@@ -42,8 +41,7 @@ Deno.serve(async (req) => {
         } else {
           console.log(`⬇️ Baixando: ${fullPath}...`)
 
-          const { data: blob, error: downloadError } = await lovableClient
-            .storage
+          const { data: blob, error: downloadError } = await lovableClient.storage
             .from('materiais-separacao')
             .download(fullPath)
 
@@ -53,8 +51,7 @@ Deno.serve(async (req) => {
             continue
           }
 
-          const { error: uploadError } = await seuSupabase
-            .storage
+          const { error: uploadError } = await seuSupabase.storage
             .from('materiais-separacao')
             .upload(fullPath, blob, { upsert: true })
 
@@ -75,15 +72,14 @@ Deno.serve(async (req) => {
       message: `Sincronização concluída!`,
       total_pastas_processadas: totalPastas,
       total_arquivos_copiados: totalArquivos,
-      erros: erros.length > 0 ? erros : 'Nenhum erro'
+      erros: erros.length > 0 ? erros : 'Nenhum erro',
     }
 
-    console.log("📊 Resultado final:", JSON.stringify(resultado))
+    console.log('📊 Resultado final:', JSON.stringify(resultado))
 
     return new Response(JSON.stringify(resultado), {
-      headers: { "Content-Type": "application/json" },
+      headers: { 'Content-Type': 'application/json' },
     })
-
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), { status: 500 })
   }

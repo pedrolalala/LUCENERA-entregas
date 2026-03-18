@@ -1,16 +1,16 @@
-import { Calendar } from 'lucide-react';
+import { Calendar } from 'lucide-react'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { FiltroSegmento } from '@/types/separacao';
+} from '@/components/ui/select'
+import { FiltroSegmento } from '@/types/separacao'
 
 interface FilterDropdownProps {
-  value: FiltroSegmento;
-  onChange: (value: FiltroSegmento) => void;
+  value: FiltroSegmento
+  onChange: (value: FiltroSegmento) => void
 }
 
 const filterOptions: { value: FiltroSegmento; label: string }[] = [
@@ -19,7 +19,7 @@ const filterOptions: { value: FiltroSegmento; label: string }[] = [
   { value: 'ultimo-mes', label: 'Último mês' },
   { value: 'ultimos-3-meses', label: 'Últimos 3 meses' },
   { value: 'ultimos-6-meses', label: 'Últimos 6 meses' },
-];
+]
 
 export function FilterDropdown({ value, onChange }: FilterDropdownProps) {
   return (
@@ -38,5 +38,5 @@ export function FilterDropdown({ value, onChange }: FilterDropdownProps) {
         ))}
       </SelectContent>
     </Select>
-  );
+  )
 }
